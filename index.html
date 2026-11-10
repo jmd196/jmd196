@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1018" />
+  <meta name="description" content="Interactive GitHub profile terminal for jmd196." />
+  <title>jmd196 — terminal</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1018;
+      --panel: #0e1620;
+      --chrome: #1b2530;
+      --stroke: #2b3b4a;
+      --text: #c9d5e2;
+      --muted: #8b9cae;
+      --cyan: #79caff;
+      --mint: #5de1be;
+      --white: #eef3f9;
+      --warn: #edbe62;
+      --shadow: 0 25px 90px rgba(0, 0, 0, .38);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(900px 510px at 8% 12%, #0b2830 0%, transparent 67%),
+                  radial-gradient(800px 520px at 100% 95%, #0c2034 0%, transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      padding: clamp(18px, 5vw, 74px) 16px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .shell { width: min(100%, 1040px); }
+    .top-note {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 0 4px 16px;
+      color: var(--muted); font-size: 12px; letter-spacing: .04em;
+    }
+    .top-note a, a { color: var(--cyan); }
+    .top-note a { text-decoration: none; }
+    .top-note a:hover, a:hover { text-decoration: underline; }
+    .terminal {
+      background: linear-gradient(135deg, #101a24, #0b1018);
+      border: 1px solid var(--stroke); border-radius: 18px;
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    .chrome {
+      height: 56px; background: var(--chrome); border-bottom: 1px solid #344452;
+      display: flex; align-items: center; padding: 0 19px; gap: 18px;
+    }
+    .lights { display: flex; gap: 9px; align-items: center; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .red { background: #ef7069; } .yellow { background: #edbe62; } .green { background: #68c995; }
+    .tab {
+      padding: 9px 14px; background: #0e1620; color: #b6c3d2;
+      border-radius: 10px 10px 0 0; min-width: 0;
+      font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tab::before { content: '❯'; color: var(--mint); margin-right: 11px; }
+    .body {
+      border-left: 4px solid var(--mint);
+      min-height: 490px; max-height: min(78vh, 740px); overflow-y: auto;
+      padding: clamp(20px, 3vw, 38px);
+      scrollbar-color: #364b5c transparent;
+      cursor: text;
+    }
+    .line { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; margin: 0 0 4px; font-size: clamp(13px, 1.55vw, 15px); }
+    .prompt { color: var(--mint); font-weight: 650; }
+    .command { color: var(--white); }
+    .muted { color: var(--muted); }
+    .cyan { color: var(--cyan); }
+    .warning { color: var(--warn); }
+    .output { margin: 2px 0 20px; }
+    .output a { color: var(--cyan); }
+    .input-line { display: flex; align-items: center; gap: 11px; min-width: 0; line-height: 1.8; }
+    .input-line label { color: var(--mint); flex: 0 0 auto; font-weight: 650; }
+    #command {
+      min-width: 0; flex: 1; background: transparent; border: 0; outline: none;
+      color: var(--white); font: inherit; font-size: 15px; caret-color: var(--mint);
+      padding: 4px 0;
+    }
+    #command::placeholder { color: #6e7f90; }
+    .quick {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 9px;
+      padding: 18px 4px 10px;
+    }
+    .quick-label { color: var(--muted); font-size: 12px; margin-right: 5px; }
+    .quick button {
+      font: 13px ui-monospace, Menlo, Consolas, monospace; color: #bcd9e8;
+      background: #12212b; border: 1px solid #2e4550; padding: 8px 13px;
+      border-radius: 7px; cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .quick button:hover, .quick button:focus-visible {
+      border-color: var(--mint); background: #18313a; outline: none;
+    }
+    .footer { color: #8b9cae; font-size: 12px; line-height: 1.6; padding: 12px 4px; }
+    .footer kbd { padding: 1px 5px; border: 1px solid #425364; border-radius: 4px; font: inherit; }
+    @media (max-width: 520px) {
+      .chrome { padding: 0 13px; gap: 12px; }
+      .body { min-height: 460px; }
+      .top-note { flex-wrap: wrap; }
+      .line { font-size: 12px; }
+      #command { font-size: 13px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="top-note">
+      <span>jmd196 / GitHub profile</span>
+      <a href="https://github.com/jmd196" target="_blank" rel="noopener noreferrer">github.com/jmd196 ↗</a>
+    </div>
+    <section class="terminal" aria-label="Interactive profile terminal">
+      <div class="chrome">
+        <div class="lights" aria-hidden="true">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        </div>
+        <div class="tab">jmd196 — ~/github</div>
+      </div>
+      <div class="body" id="screen" role="region" aria-label="Terminal output" tabindex="0">
+        <div id="output" aria-live="polite" aria-relevant="additions"></div>
+        <form id="command-form" autocomplete="off">
+          <div class="input-line">
+            <label for="command">❯</label>
+            <input id="command" type="text" placeholder="type help to get started" spellcheck="false" aria-label="Type a terminal command" autofocus />
+          </div>
+        </form>
+      </div>
+    </section>
+    <nav class="quick" aria-label="Quick commands">
+      <span class="quick-label">Quick commands</span>
+      <button type="button" data-command="help">help</button>
+      <button type="button" data-command="whoami">whoami</button>
+      <button type="button" data-command="projects">projects</button>
+      <button type="button" data-command="club">club</button>
+      <button type="button" data-command="links">links</button>
+      <button type="button" data-command="clear">clear</button>
+    </nav>
+    <div class="footer">
+      Press <kbd>Enter</kbd> to run a command, <kbd>↑</kbd>/<kbd>↓</kbd> for command history, or <kbd>Tab</kbd> to autocomplete. This is an interactive profile, not a real shell.
+    </div>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const output = document.querySelector('#output');
+      const screen = document.querySelector('#screen');
+      const input = document.querySelector('#command');
+      const form = document.querySelector('#command-form');
+      const history = [];
+      let historyIndex = 0;
+      const commands = ['help', 'whoami', 'about', 'projects', 'club', 'tools', 'links', 'github', 'pwd', 'ls', 'clear'];
+
+      function line(message = '', className = '') {
+        const node = document.createElement('div');
+        node.className = `line ${className}`.trim();
+        node.textContent = message;
+        output.appendChild(node);
+        return node;
+      }
+      function linkLine(text, url) {
+        const node = document.createElement('div');
+        node.className = 'line';
+        const anchor = document.createElement('a');
+        anchor.textContent = text;
+        anchor.href = url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        node.appendChild(anchor);
+        output.appendChild(node);
+      }
+      function gap() {
+        const node = document.createElement('div');
+        node.className = 'output';
+        output.appendChild(node);
+      }
+      function scrollDown() { screen.scrollTop = screen.scrollHeight; }
+      function commandEcho(value) {
+        const node = document.createElement('div');
+        node.className = 'line';
+        const prefix = document.createElement('span');
+        prefix.className = 'prompt';
+        prefix.textContent = '❯  ';
+        const rest = document.createElement('span');
+        rest.className = 'command';
+        rest.textContent = value;
+        node.append(prefix, rest);
+        output.appendChild(node);
+      }
+      function run(raw) {
+        const original = raw.trim();
+        if (!original) { input.value = ''; return; }
+        history.push(original);
+        historyIndex = history.length;
+        input.value = '';
+        commandEcho(original);
+        const value = original.toLowerCase().replace(/\s+/g, ' ');
+        if (value === 'clear') { output.replaceChildren(); input.focus(); return; }
+        switch (value) {
+          case 'help':
+            line('Available commands', 'cyan');
+            line('  whoami     A quick introduction');
+            line('  projects   What I’m working on');
+            line('  club       Cybersecurity Club');
+            line('  tools      Platforms and tools I use');
+            line('  links      Where to find my repositories');
+            line('  clear      Clear the screen');
+            line('  help       Show this list');
+            break;
+          case 'whoami': case 'about': case 'cat about.txt':
+            line('Cybersecurity student at Macomb Community College.');
+            line('Professional Tutor at the Academic Success Center.');
+            line('I use GitHub for coursework, coding practice, and personal projects.');
+            break;
+          case 'projects': case 'ls projects/': case 'cat projects.txt':
+            line('discord-bot       Working on a Discord moderation bot', 'cyan');
+            line('python-practice   Programming exercises and scripts', 'cyan');
+            line('security-labs     Class labs and experiments', 'cyan');
+            line('These are areas I’m working on, not necessarily repository names.', 'muted');
+            break;
+          case 'club': case 'cat club.txt':
+            line('I’m president of the Macomb Community College Cybersecurity Club.');
+            line('We run meetings, workshops, and activities for students with different experience levels.');
+            break;
+          case 'tools':
+            line('Platforms: Windows, macOS, Linux');
+            line('Working with: Python, Git, GitHub');
+            break;
+          case 'links': case 'github': case 'open github':
+            linkLine('View GitHub profile ↗', 'https://github.com/jmd196');
+            linkLine('Browse repositories ↗', 'https://github.com/jmd196?tab=repositories');
+            break;
+          case 'pwd':
+            line('~/github');
+            break;
+          case 'ls':
+            line('about.txt    projects/    club.txt', 'cyan');
+            break;
+          default:
+            line(`Command not found: ${original}`, 'warning');
+            line('Type help to see available commands.', 'muted');
+        }
+        gap(); scrollDown(); input.focus();
+      }
+      form.addEventListener('submit', (event) => {
+        event.preventDefault(); run(input.value);
+      });
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp') {
+          event.preventDefault(); if (historyIndex > 0) historyIndex -= 1;
+          input.value = history[historyIndex] || '';
+        } else if (event.key === 'ArrowDown') {
+          event.preventDefault(); if (historyIndex < history.length) historyIndex += 1;
+          input.value = history[historyIndex] || '';
+        } else if (event.key === 'Tab') {
+          event.preventDefault();
+          const matches = commands.filter(command => command.startsWith(input.value.toLowerCase()));
+          if (matches.length === 1) input.value = matches[0];
+        }
+      });
+      document.querySelectorAll('button[data-command]').forEach(button => {
+        button.addEventListener('click', () => run(button.dataset.command));
+      });
+      screen.addEventListener('click', (event) => {
+        if (event.target.closest('a, button, input')) return;
+        input.focus();
+      });
+      line('GitHub profile terminal', 'cyan');
+      line('Type help or choose a command below.', 'muted');
+      gap();
+      input.focus();
+    })();
+  </script>
+</body>
+</html>

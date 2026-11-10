@@ -1,28 +1,34 @@
-# Hey, I'm Johnathan!
+<div align="center">
 
-I'm a cybersecurity student using GitHub as a place to learn, keep track of coursework, and occasionally build something if it's fun.
+<a href="https://jmd196.github.io/jmd196/" title="Open the interactive terminal">
+  <img src="./terminal-panel.svg" alt="Terminal preview. Click to open the interactive version." width="100%" />
+</a>
 
-Right now, most of what you'll find here will be **coursework**, but I'm also starting to branch out into **personal and side projects** as I learn more.
+<sub>Click the terminal to type commands, or open the quick commands below.</sub>
 
-## What I'm Up To
+</div>
 
-* Learning cybersecurity
-* Writing more Python code
-* Working on a Discord bot
-* Getting more comfortable building things from scratch
-* Experimenting with ideas outside of class when something catches my interest
+<br>
 
-## A Little About Me
+<details>
+<summary><code>❯ whoami</code></summary>
 
-I'm used to working across **Windows, macOS, and Linux**, so I'm usually bouncing between different environments depending on what I'm working on.
+I'm studying cybersecurity at Macomb Community College. I also work as a Professional Tutor and serve as president of the college's Cybersecurity Club.
 
-## What's Here?
+</details>
 
-For now, expect a mix of:
+<details>
+<summary><code>❯ ls projects/</code></summary>
 
-* 📚 Coursework
-* 🔐 Cybersecurity projects and experiments
-* 🤖 Discord bot development
-* 🧪 Random projects and ideas as I learn more
+- **Discord bot** — A moderation bot I'm working on.
+- **Python practice** — Coursework, exercises, and small scripts.
+- **Security labs** — Class activities and experiments.
 
-This profile is very much a work in progress.
+</details>
+
+<details>
+<summary><code>❯ open github</code></summary>
+
+[Browse my repositories](https://github.com/jmd196?tab=repositories)
+
+</details>
